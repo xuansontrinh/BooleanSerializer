@@ -3,15 +3,20 @@ package main
 import booleanexpression.{And, BooleanExpression, False, Not, Or, True, Variable}
 import play.api.libs.json._
 import serializer.Serializer
+import booleanexpressionreducer.BooleanExpressionReducer
+import warmup.WarmUpTask
 
 object Main extends App {
-  val f: BooleanExpression = And(False, Variable("P"))
-  val t: BooleanExpression = Or(True, Variable("Q"))
-  val n: BooleanExpression = Not(And(f, t))
-  val s = Serializer.serialize(n)
+  val e1: BooleanExpression = Not(And(And(False, Variable("P")), Or(True, Variable("Q"))))
+  val e2: BooleanExpression = And(Variable("P"), Or(Variable("Q"), Variable("P")))
+  val s = Serializer.serialize(e1)
 
-  println(n)
-  println(Serializer.serialize(n))
-  println(Serializer.deserialize(Serializer.serialize(n)))
-  println(n == Serializer.deserialize(Serializer.serialize(n)))
+  println(e1)
+  println(BooleanExpressionReducer.reduce(e1))
+  println(Serializer.serialize(e1))
+  println(Serializer.deserialize(Serializer.serialize(e1)))
+  println(e1 == Serializer.deserialize(Serializer.serialize(e1)))
+  println(BooleanExpressionReducer.reduce(e2))
+  println("---------------------")
+  println(WarmUpTask.warmupFunImproved(3))
 }
