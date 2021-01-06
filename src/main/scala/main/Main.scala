@@ -18,5 +18,5 @@ object Main extends App {
   println(e1 == Serializer.deserialize(Serializer.serialize(e1)))
   println(BooleanExpressionReducer.reduce(e2))
   println("---------------------")
-  println(WarmUpTask.warmupFunImproved(3))
+  println(WarmUpTask.warmupFunImproved2(1))
 }

@@ -21,7 +21,7 @@ def warmupFun(x: Int): Int = {
 ```
 This function has the time complexity O(2^x) and space complexity O(x) where x is the positive integer parameter of the function. This is due to the fact that this function solves the same sub-problems many times.
 
-There are two ways to properly deal with this problem. One is to use memoization, i.e. to store the results of the sub-problems for saving processing time => O(x) time and space complexity. Another way is to suppress the two sub-problems into one because they are the same:
+There are three ways to properly deal with this problem. One is to use memoization, i.e. to store the results of the sub-problems for saving processing time => O(x) time and space complexity. Another way is to suppress the two sub-problems into one because they are the same:
 
 ```scala
 def warmupFunImproved(x: Int): Int = {
@@ -32,9 +32,24 @@ def warmupFunImproved(x: Int): Int = {
     }
 }
 ```
-With this implementation, the time and complexity of the function is also reduced to linear O(x).
+With this implementation, the time and complexity of the function is also reduced to linear O(x) but because of the use of recursion, the space complexity is still O(x). The third solution is to use a `for` loop instead of recursion. This can help the space complexity to reduce to constant O(1).
 
-___Note___: As can be seen, this function's goal is to calculate the power of 2. Therefore, we can use the function `scala.math.pow` to work on the problem in constant time and space.
+```scala
+def warmupFunImproved2(x: Int): Int = {
+    x match {
+          case y if y < 0 => -1
+          case 0 => 1
+          case _ =>
+                var res = 1
+                for (m <- 1 to x) {
+                    res = res * 2
+                }
+                res
+    }
+}
+```
+
+___Note___: As can be seen, this function's goal is to calculate the power of 2. Therefore, we can use the function `scala.math.pow` to work on the problem in O(log(x)) time and O(1) space.
 
 ## Scala Boolean (De-)Serializer
 ### Main Features
